@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - .:/db/project_files/code
+  datascience-notebook:
+      build:
+        context: .
+        dockerfile: Dockerfile-analytics
+      environment:
+        - JUPYTER_TOKEN=hi
+      restart: always
+      volumes:
+        - .:/analytics/project_files
+      ports:
+        - 8888:8888
+      container_name: datascience-notebook-container
+      links:
+        - db
+      depends_on:
+        - db
+      environment:
+        DB_HOST: db
+        DB_PORT: 5432
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: movies
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+
+#      pip install ipython-sql
+#     pip install sqlalchemy
+
+
