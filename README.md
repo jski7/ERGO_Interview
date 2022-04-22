@@ -1,5 +1,4 @@
-# ERGO_Interview
-###Ergo - Interview task solution
+# Ergo - Interview task solution
 
 1. Create Git repository https://github.com/jski7/ERGO_Interview.git
 2. Create folder for analytics and db
