@@ -10,15 +10,22 @@
    2. Postgres
    3. pgadmin4 - database visualisation and manual management
 7. Build containers
-8. Manually create movies database in pgadmin
-9. Manually create tables
-10. Manually insert data from csv
-11. Log into Jupyter via browser - token: hi
-12. Resolve tasks in Jupyter notebook (5 out of 6 resolved)
-13. Translate Database initiation manual actions to SQL queries
-14. Merge Database initialisation file and task solution file
-15. Clean up database and containers 
-16. Test solution from scratch
+8. Log in into pgadmin
+9. Connect to postgres server
+   1. hostname: postgress
+   2. login: postgres
+   3. password: changeme
+10. Manually create movies database in pgadmin
+11. Manually create tables
+12. Manually insert data from csv
+13. Log into Jupyter via browser - token: hi
+14. Resolve tasks in Jupyter notebook (5 out of 6 resolved)
+15. Translate Database initiation manual actions to SQL queries
+16. Merge Database initialisation file and task solution file
+17. Clean up database and containers 
+18. Test solution from scratch
+19. Remove pgadmin
+20. Test script without pgadmin
 
 ### Build from scratch
 1. Pull repo
@@ -27,3 +34,4 @@
 4. Log into Jupyter via browser - token: hi
 5. Run /analytics/Solution.ipynb
 6. DB with tables and links is initiated, data imported from csv
+7. Answers are printed as Solution.ipynb output
