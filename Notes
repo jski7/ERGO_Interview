@@ -15,3 +15,122 @@ CREATE TABLE passengers (
 );
 
 \copy passengers (survived, pclass, name, sex, age, siblings_spouses, parents_children, fare) fr
+
+SQL
+
+-- Database: movies
+
+-- DROP DATABASE IF EXISTS movies;
+
+CREATE DATABASE movies
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+-- SCHEMA: public
+
+-- DROP SCHEMA IF EXISTS public ;
+
+CREATE SCHEMA IF NOT EXISTS public
+    AUTHORIZATION postgres;
+
+COMMENT ON SCHEMA public
+    IS 'standard public schema';
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+GRANT ALL ON SCHEMA public TO postgres;
+
+-- Table: public.links
+
+-- DROP TABLE IF EXISTS public.links;
+
+CREATE TABLE IF NOT EXISTS public.links
+(
+    "movieId" integer NOT NULL,
+    "imdbId" integer NOT NULL,
+    "tmdbId" integer,
+    CONSTRAINT links_pkey PRIMARY KEY ("movieId"),
+    CONSTRAINT "movieId_movies" FOREIGN KEY ("movieId")
+        REFERENCES public.movies ("movieId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.links
+    OWNER to postgres;
+
+-- Table: public.movies
+
+-- DROP TABLE IF EXISTS public.movies;
+
+CREATE TABLE IF NOT EXISTS public.movies
+(
+    "movieId" integer NOT NULL,
+    title character varying COLLATE pg_catalog."default",
+    genres character varying COLLATE pg_catalog."default",
+    CONSTRAINT movies_pkey PRIMARY KEY ("movieId")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.movies
+    OWNER to postgres;
+
+-- Table: public.ratings
+
+-- DROP TABLE IF EXISTS public.ratings;
+
+CREATE TABLE IF NOT EXISTS public.ratings
+(
+    "userId" integer NOT NULL,
+    "movieId" integer NOT NULL,
+    rating numeric NOT NULL,
+    "timestamp" integer NOT NULL,
+    CONSTRAINT ratings_pkey PRIMARY KEY ("userId", "movieId"),
+    CONSTRAINT "movieId_ratings" FOREIGN KEY ("movieId")
+        REFERENCES public.links ("movieId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.ratings
+    OWNER to postgres;
+
+-- Table: public.tags
+
+-- DROP TABLE IF EXISTS public.tags;
+
+CREATE TABLE IF NOT EXISTS public.tags
+(
+    "movieId" integer NOT NULL,
+    tag character varying COLLATE pg_catalog."default",
+    "timestamp" integer,
+    "userId" integer,
+    CONSTRAINT "movieId_tags" FOREIGN KEY ("movieId")
+        REFERENCES public.links ("movieId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tags
+    OWNER to postgres;
+
+
+//
+
+1. SELECT COUNT(*) FROM movies;
+2.

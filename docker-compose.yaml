@@ -1,48 +1,65 @@
-version: "3"
+version: '3.5'
 
 services:
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile-db
-    restart: always
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeme
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
     ports:
       - '5432:5432'
-    volumes:
-      - .:/db/project_files/code
+    networks:
+      - postgres
+    restart: always
+
   datascience-notebook:
+      container_name: datascience-notebook-container
       build:
         context: .
         dockerfile: Dockerfile-analytics
-      environment:
-        - JUPYTER_TOKEN=hi
       restart: always
       volumes:
         - .:/analytics/project_files
-      ports:
-        - 8888:8888
-      container_name: datascience-notebook-container
-      links:
-        - db
-      depends_on:
-        - db
       environment:
         DB_HOST: db
         DB_PORT: 5432
         DB_USER: postgres
-        DB_PASSWORD: postgres
+        DB_PASSWORD: changeme
         DB_NAME: movies
+
+      ports:
+        - 8888:8888
+      networks:
+        - postgres
+      restart: always
+
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
-    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - ./db/:/home/db_data/project_files
+
     ports:
       - "5050:80"
+    networks:
+      - postgres
+    restart: always
 
-#      pip install ipython-sql
-#     pip install sqlalchemy
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:
 
 
