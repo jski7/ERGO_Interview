@@ -21,7 +21,6 @@ services:
       build:
         context: .
         dockerfile: Dockerfile-analytics
-      restart: always
       volumes:
         - .:/analytics/project_files
       environment:

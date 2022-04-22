@@ -6,7 +6,7 @@ ENV  JUPYTER_TOKEN hi
 WORKDIR .
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2 \
-    && pip install ipython-sql
+RUN pip install psycopg2 ipython-sql \
 EXPOSE 8888
-COPY . .
+COPY ./analytics ./analytics/
+COPY ./db ./db/

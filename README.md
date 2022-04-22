@@ -12,6 +12,7 @@ Ergo - Interview task solution
    3. pgadmin4
 7. Build containers
 8. Create movies database
-9. Log into Jupyter via browser
+9. Log into Jupyter via browser - token: hi
 10. Create tables and import data to movies database - Run init.ipynb via Jupyter
 11. Send requests to database and get answers to questions - Run Solution.ipynb
+12. Clean up Jupyter directory
